@@ -24,14 +24,14 @@ object Monoids {
     def empty = true
   }
 
-  def sum[A](list: List[A])(implicit m: Monoid[A]): A =
+  def combineAll[A](list: List[A])(implicit m: Monoid[A]): A =
     if (list.isEmpty) m.empty
-    else m.combine(list.head, sum(list.tail))
+    else m.combine(list.head, combineAll(list.tail))
 
   def main(args: Array[String]): Unit = {
-    println(sum(List(4, 5)))
-    println(sum(List("a", "b", "c")))
-    println(sum(List(true, false)))
-    println(sum[String](List()))
+    println(combineAll(List(4, 5)))
+    println(combineAll(List("a", "b", "c")))
+    println(combineAll(List(true, false)))
+    println(combineAll[String](List()))
   }
 }
